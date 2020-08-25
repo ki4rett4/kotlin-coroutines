@@ -27,6 +27,7 @@ import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import retrofit2.Call
 
 /**
  * Title represents the title fetched from the network
@@ -40,7 +41,8 @@ data class Title constructor(val title: String, @PrimaryKey val id: Int = 0)
 @Dao
 interface TitleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTitle(title: Title)
+    suspend fun insertTitle(title: Title)
+
 
     @get:Query("select * from Title where id = 0")
     val titleLiveData: LiveData<Title?>
